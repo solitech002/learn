@@ -1,0 +1,52 @@
+systemctl daemon-reload
+systemctl start tomcat
+systemctl enable tomcat
+systemctl status tomcat
+
+Create Tomcat Admin User and Password:
+nano /opt/tomcat/conf/tomcat-users.xml
+# Add the following line before the </tomcat-users> tag
+<role rolename="manager-gui"/>
+<user username="tomcatadmin" password="password" roles="manager-gui,admin-gui,manager-script"/>
+# After doing above, save and exit out
+
+Enable Tomcat Remote Access:
+nano /opt/tomcat/webapps/manager/META-INF/context.xml
+# comment out the following lines
+<Valve className="org.apache.catalina.valves.RemoteAddrValve"
+allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" />
+
+nano /opt/tomcat/webapps/host-manager/META-INF/context.xml
+commentout the following lines:
+<Valve className="org.apache.catalina.valves.RemoteAddrValve"
+allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" />
+
+systemctl restart tomcat
+
+Try access Tomcat on your browser on default port 8080
+
+sudo systemctl stop tomcat.service
+
+sudo systemctl start tomcat.service
+
+
+How to change the default port in Apache Tomcat:
+
+# To change the default port in Apache Tomcat, folow below steps
+1. Stop Apache Tomcat service
+2. Go to your Apache Tomcat folder and look for server.xml under \conf\ folder
+3. Modify the Connector port value from 8080" to the one you want to assign to your web server.
+From: <connector port="8080" protocol="HTTP/1.1" ??
+To: <connector port="8085" protocol="HTTP/1.1"
+
+4. Save and exit the file
+5. Restart the Apache Tomcat service
+
+
+
+
+Go jenkins
+go to manage jenkins 
+click on pugins  
+search for "Deploy to container Plugin" 
+click install without restart 
